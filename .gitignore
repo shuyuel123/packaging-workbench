@@ -1,0 +1,14 @@
+node_modules
+dist
+dist-ssr
+.vite
+*.local
+*.log
+build.err
+dev.err
+dev.log
+pro_install.log
+build.log
+tsc.log
+*.tsbuildinfo
+.DS_Store

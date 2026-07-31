@@ -1,0 +1,30 @@
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+  background: #f0f2f5;
+}
+
+/* 暗色侧边栏内的滚动条微调 */
+.ant-layout-sider::-webkit-scrollbar {
+  width: 6px;
+}
+.ant-layout-sider::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
