@@ -15,7 +15,7 @@ import {
 } from "@ant-design/icons";
 import { Outlet, useLocation, useNavigate, useMatches } from "react-router-dom";
 import { useWorkbench } from "../state/WorkbenchContext";
-import { ORDER_STATUS_LABEL } from "../types";
+import { ORDER_STATUS_LABEL, type WorkItem } from "../types";
 import type { RouteHandle, BreadcrumbCtx } from "../router";
 
 const { Header, Sider, Content } = Layout;
@@ -57,6 +57,7 @@ export function AppLayout() {
 
   // 审核待办 + 待处理订单（直接复用 WorkbenchContext 统一派生数据，避免重复计算）
   const reviewOrders = wb.derived.reviewOrders;
+  const reviewTodos = wb.items.filter((i) => i.tags.includes("审核待办"));
   const bellCount = wb.derived.unreadNotifications;
   const custName = (id: string) => wb.customers.find((c) => c.id === id)?.name ?? "";
 
@@ -186,7 +187,7 @@ export function AppLayout() {
             <List
               size="small"
               dataSource={reviewTodos}
-              renderItem={(it) => (
+              renderItem={(it: WorkItem) => (
                 <List.Item
                   actions={[
                     <a key="go" onClick={() => { setBellOpen(false); navigate("/todos"); }}>查看</a>,

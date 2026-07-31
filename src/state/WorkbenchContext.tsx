@@ -52,7 +52,7 @@ interface NewProjectInput {
   phases?: Project["phases"];
 }
 
-interface WorkbenchContextValue {
+export interface WorkbenchContextValue {
   items: WorkItem[];
   projects: Project[];
   summaries: AISummary[];

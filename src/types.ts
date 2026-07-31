@@ -212,6 +212,8 @@ export interface Regulation {
   certMarks: string[];
   /** 警示语 */
   warnings: string[];
+  /** 法规附件文件（删除时一并清理） */
+  attachments?: OrderFile[];
 }
 
 // ---------- 包装物料：客户品牌资产库 ----------

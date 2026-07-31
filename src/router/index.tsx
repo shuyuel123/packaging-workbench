@@ -1,27 +1,27 @@
 import { Navigate } from "react-router-dom";
 import type { RouteObject } from "react-router-dom";
 import type { Params } from "react-router-dom";
-import AppLayout from "@/components/AppLayout";
-import PackagingLayout from "@/components/PackagingLayout";
+import { AppLayout } from "@/components/AppLayout";
+import { PackagingLayout } from "@/components/PackagingLayout";
 
 // 页面组件（路径适配当前项目真实目录结构）
-import Dashboard from "@/pages/Dashboard";
-import Projects from "@/pages/Projects";
-import ProjectDetail from "@/pages/ProjectDetail";
-import Todos from "@/pages/Todos";
-import AIOrganize from "@/pages/AIOrganize";
-import Weekly from "@/pages/Weekly";
-import WeeklyEdit from "@/pages/WeeklyEdit";
-import Orders from "@/pages/packaging/Orders";
-import OrderDetail from "@/pages/packaging/OrderDetail";
-import FlowTracking from "@/pages/packaging/FlowTracking";
-import BrandAssets from "@/pages/packaging/BrandAssets";
+import { Dashboard } from "@/pages/Dashboard";
+import { Projects } from "@/pages/Projects";
+import { ProjectDetail } from "@/pages/ProjectDetail";
+import { Todos } from "@/pages/Todos";
+import { AIOrganize } from "@/pages/AIOrganize";
+import { Weekly } from "@/pages/Weekly";
+import { WeeklyEdit } from "@/pages/WeeklyEdit";
+import { Orders } from "@/pages/packaging/Orders";
+import { OrderDetail } from "@/pages/packaging/OrderDetail";
+import { FlowTracking } from "@/pages/packaging/FlowTracking";
+import { BrandAssets } from "@/pages/packaging/BrandAssets";
 import RegulationLibrary from "@/pages/RegulationLibrary"; // 新版（统一入口）
-import AiReview from "@/pages/packaging/AiReview";
-import CustomerQuality from "@/pages/packaging/CustomerQuality";
-import TimeoutReminders from "@/pages/packaging/TimeoutReminders";
-import PeakSeason from "@/pages/packaging/PeakSeason";
-import Settings from "@/pages/Settings";
+import { AiReview } from "@/pages/packaging/AiReview";
+import { CustomerQuality } from "@/pages/packaging/CustomerQuality";
+import { TimeoutReminders } from "@/pages/packaging/TimeoutReminders";
+import { PeakSeason } from "@/pages/packaging/PeakSeason";
+import { Settings } from "@/pages/Settings";
 import type { WorkbenchContextValue } from "@/state/WorkbenchContext";
 
 // 面包屑上下文：由 AppLayout 注入全局数据与路由参数，供动态路由反查真实名称
@@ -46,7 +46,7 @@ export const routes: RouteObject[] = [
         path: "projects/:id",
         element: <ProjectDetail />,
         handle: {
-          title: ({ params, wb }) =>
+          title: ({ params, wb }: BreadcrumbCtx) =>
             wb.projects.find((p) => p.id === params.id)?.name ?? "项目详情",
         },
       },
@@ -69,8 +69,8 @@ export const routes: RouteObject[] = [
             path: "orders/:id",
             element: <OrderDetail />,
             handle: {
-              title: ({ params, wb }) =>
-                wb.orders.find((o) => o.id === params.id)?.orderName ?? "订单详情",
+              title: ({ params, wb }: BreadcrumbCtx) =>
+                wb.orders.find((o) => o.id === params.id)?.productModel ?? "订单详情",
             },
           },
           { path: "flow", element: <FlowTracking />, handle: { title: "流程跟踪" } },
@@ -79,7 +79,7 @@ export const routes: RouteObject[] = [
             path: "brand/:cid",
             element: <BrandAssets />,
             handle: {
-              title: ({ params, wb }) =>
+              title: ({ params, wb }: BreadcrumbCtx) =>
                 wb.customers.find((c) => c.id === params.cid)?.name ?? "品牌资产",
             },
           },
