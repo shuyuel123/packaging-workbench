@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   deploy:
@@ -27,5 +27,18 @@ jobs:
         run: npm run build
 
       - name: Deploy to EdgeOne Pages
-        # 项目名 -n 指定；若同名项目不存在会自动创建
-        run: npx edgeone makers deploy ./dist -n packaging-workbench -t ${{ secrets.EDGEONE_API_TOKEN }}
+        id: deploy
+        env:
+          EDGEONE_API_TOKEN: ${{ secrets.EDGEONE_API_TOKEN }}
+        run: |
+          output=$(npx edgeone makers deploy ./dist -n packaging-workbench -t "$EDGEONE_API_TOKEN")
+          echo "$output"
+          url=$(printf '%s\n' "$output" | grep -oE 'https://[a-zA-Z0-9./_-]+' | head -n 1)
+          echo "url=${url:-$output}" >> "$GITHUB_OUTPUT"
+
+      - name: Comment deployment URL on commit
+        if: steps.deploy.outputs.url != ''
+        uses: peter-evans/commit-comment@v3
+        with:
+          body: |
+            🚀 已部署到 EdgeOne Pages: ${{ steps.deploy.outputs.url }}
