@@ -14,3 +14,5 @@ tsc.log
 .DS_Store
 dist.zip
 .edgeone/
+# 含明文 EdgeOne API Token，禁止提交
+deploy.bat
