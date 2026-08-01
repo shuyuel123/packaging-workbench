@@ -3,7 +3,9 @@ import react from "@vitejs/plugin-react";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
 import { fileURLToPath, URL } from "node:url";
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
+  // debug 模式：关闭压缩并保留函数名，使运行时错误栈可读（仅排查用）
+  esbuild: { keepNames: mode === "debug" },
   plugins: [
     react(),
     // rss-parser 依赖 xml2js，会引用 stream/util/events 等 Node 核心模块，
@@ -24,6 +26,8 @@ export default defineConfig({
   },
   build: {
     chunkSizeWarningLimit: 1200,
+    minify: mode === "debug" ? false : "esbuild",
+    sourcemap: mode === "debug",
     rollupOptions: {
       output: {
         manualChunks: {
@@ -33,4 +37,4 @@ export default defineConfig({
       },
     },
   },
-});
+}));
