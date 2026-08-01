@@ -12,3 +12,5 @@ build.log
 tsc.log
 *.tsbuildinfo
 .DS_Store
+dist.zip
+.edgeone/

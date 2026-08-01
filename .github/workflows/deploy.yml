@@ -31,9 +31,9 @@ jobs:
         env:
           EDGEONE_API_TOKEN: ${{ secrets.EDGEONE_API_TOKEN }}
         run: |
-          output=$(npx edgeone makers deploy ./dist -n packaging-workbench -e production -t "$EDGEONE_API_TOKEN")
+          output=$(npx edgeone makers deploy ./dist -n packaging-workbench -t "$EDGEONE_API_TOKEN" 2>&1)
           echo "$output"
-          url=$(printf '%s\n' "$output" | grep -oE 'https://[a-zA-Z0-9./_-]+' | head -n 1)
+          url=$(printf '%s\n' "$output" | grep 'EDGEONE_DEPLOY_URL=' | cut -d'=' -f2-)
           echo "url=${url:-$output}" >> "$GITHUB_OUTPUT"
 
       - name: Comment deployment URL on commit
